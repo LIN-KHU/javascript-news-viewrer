@@ -6,6 +6,8 @@ body {
   background-color: #dedede;
   margin: 0;
   padding: 0;
+
+  
 }
 
 #app {
@@ -13,4 +15,56 @@ body {
   min-height: 100vh;
   margin: auto;
   background-color: white;
+}
+
+.header{
+width: 480px;
+height: 92px;
+left: 468px;
+top: 0px;
+
+background: #466AEA;
+
+
+}
+
+.headerFont {
+  white-space: nowrap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.linkhuText {
+  width: 239px;
+  height: 48px;
+  font-size: 40px;
+  line-height: 78px;
+}
+
+.newsText {
+
+  width: 239px;
+  height: 48px;
+  font-size: 25px;
+  line-height: 78px;
+}
+
+/* styles.css */
+
+
+.tab{
+  /* nav */
+  white-space: nowrap;
+  display: inline-block;
+  padding: 10px;
+  margin: 4px;
+  cursor: pointer;
+
+
+}
+
+.tab:hover {
+  background-color: #ddd;
 }
