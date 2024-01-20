@@ -38,16 +38,15 @@ class main {
   displayNews(articles) {
     const appElement = document.getElementById("main");
 
-    // 간단한 예시로 다섯 개의 뉴스를 표시
     if (articles.length > 0) {
       const newsHtml = articles
         .map(
           (news) => `
-        <div>
+        <div class="news-item">
           <h2>${news.title}</h2>
           ${
             news.urlToImage
-              ? `<img src="${news.urlToImage}" alt="${news.title}" style="max-width: 480px; height: auto;">`
+              ? `<img src="${news.urlToImage}" alt="${news.title}" style="max-width: 460px; height: auto;">`
               : ""
           }
           <p>${news.description}</p>
@@ -55,7 +54,6 @@ class main {
       `
         )
         .join("");
-
       appElement.innerHTML = newsHtml;
     } else {
       appElement.innerHTML = "<div>No news available</div>";

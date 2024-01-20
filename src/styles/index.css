@@ -21,14 +21,21 @@ body {
   
 }
 
+img {
+  border-radius: 20px;
+}
+
 #main{
   width: 480px;
-  height: 100vh;
+  height: fit-content;
 
   
 }
 
-
+/* CSS 파일 또는 <style> 태그 내에 추가 */
+.news-item {
+  margin: 0 10px; /* 좌우 여백을 10px로 조절 */
+}
 
 
 
