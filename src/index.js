@@ -46,7 +46,7 @@ class main {
           <h2>${news.title}</h2>
           ${
             news.urlToImage
-              ? `<img src="${news.urlToImage}" alt="${news.title}" style="max-width: 400px; height: auto;">`
+              ? `<img src="${news.urlToImage}" alt="${news.title}" >`
               : ""
           }
           <p>${news.description}</p>
@@ -61,5 +61,5 @@ class main {
   }
 }
 
-const app = new main();
 const topInstance = new Top();
+const app = new main();
