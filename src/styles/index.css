@@ -68,3 +68,24 @@ background: #466AEA;
 .tab:hover {
   background-color: #ddd;
 }
+
+.underline1{
+width: 65px;
+height: 4px;
+left: 468px;
+top: 147px;
+
+background: #466AEA;
+
+}
+
+.underline2{
+  /* underline */
+width: 480px;
+height: 4px;
+left: 468px;
+top: 147px;
+
+background: #CECECE;
+
+}
