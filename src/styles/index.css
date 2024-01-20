@@ -8,6 +8,33 @@ body {
   padding: 0;
 }
 
+
+#top{
+  background-color: #466AEA;
+  width: 480px;
+  height: 92px;
+  color:#dedede; 
+  font-size: 48px; 
+  font-weight: bold;
+  line-height: 92px;
+  padding-left:  20px;
+  
+}
+
+#main{
+  width: 480px;
+  height: 100vh;
+
+  
+}
+
+
+
+
+
+
+
+
 #app {
   max-width: 480px;
   min-height: 100vh;
