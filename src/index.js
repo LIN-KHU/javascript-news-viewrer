@@ -5,12 +5,10 @@ require("dotenv").config();
 class App {
   constructor() {
     this.appElement = document.getElementById("app");
-    this.results = "";
+    this.results = [];
 
     this.createHeader();
     this.createNav();
-    this.organizeResults();
-    this.createSection();
     this.start();
   }
 
@@ -35,10 +33,10 @@ class App {
   }
 
   createNav() {
-    const navElement = this.createElement("tab");
+    const navElement = this.createElement("nav");
     TAP_NAME.forEach((nav) => {
-      const tabElement = this.createElement("div", nav.ko);
-      tabElement.classList.add("tab");
+      const tabElement = this.createElement("button", nav.ko);
+      tabElement.classList.add("tab", "sensedButton");
       navElement.appendChild(tabElement);
     });
     this.appElement.appendChild(navElement);
@@ -52,30 +50,17 @@ class App {
     this.appElement.appendChild(underline2);
   }
 
-  createSection() {
-    const sectionElement1 = this.createElement("section", "section1");
-    this.appElement.appendChild(sectionElement1);
-
-    const sectionElement2 = this.createElement("section", "section2");
-    this.appElement.appendChild(sectionElement2);
-  }
-
   async start() {
     await this.apiManager();
-    this.organizeResults();
+    this.createAndPutContents();
   }
 
   async apiManager() {
-    const apiKey = "2721d1f0de38415b978ddeed5ff2291a";
-    const newsList = document.getElementById("news-list");
-
-    if (!newsList) {
-      console.error("Error: newsList is null");
-      return;
-    }
+    const apiKey = "37e4270349374e67858fd355884ef83c";
 
     try {
-      // Promise.all을 사용하여 여러 API 호출을 병렬로 수행
+      this.results = {};
+
       const apiPromises = TAP_NAME.map(async (nav) => {
         const topic = `${nav.ko}`;
         let apiUrl;
@@ -94,37 +79,82 @@ class App {
 
         const data = await response.json();
 
-        return data.articles;
+        this.results[topic] = data.articles.slice(0, 2);
       });
 
-      // 병렬로 수행된 모든 API 호출의 결과를 기다림
-      this.results = await Promise.all(apiPromises);
-      //console.log(this.results);
-
-      // results 배열에는 각 API 호출의 결과가 순서대로 들어있음
-      this.results.forEach((articles) => {
-        articles.forEach((article) => {
-          //console.log(article);
-
-          const listItem = document.createElement("li");
-          const link = document.createElement("a");
-
-          link.href = article.url;
-          link.textContent = article.title;
-          listItem.appendChild(link);
-          newsList.appendChild(listItem);
-
-          //console.log(listItem);
-          //console.log(link);
-        });
-      });
+      await Promise.all(apiPromises);
     } catch (error) {
       console.error("Error:", error);
     }
   }
 
-  organizeResults() {
-    console.log(this.results);
+  createAndPutContents() {
+    const sectionElement = this.createElement("section");
+    this.appElement.appendChild(sectionElement);
+
+    for (let articleIndex = 0; articleIndex < 2; articleIndex++) {
+      const image = this.createElement("img");
+      image.classList.add(`image${articleIndex + 1}`);
+      sectionElement.appendChild(image);
+
+      const reporter = this.createElement("p");
+      reporter.classList.add(`reporter${articleIndex + 1}`);
+      sectionElement.appendChild(reporter);
+
+      const title = this.createElement("p");
+      title.classList.add(`title${articleIndex + 1}`);
+      sectionElement.appendChild(title);
+
+      const description = this.createElement("p");
+      description.classList.add(`description${articleIndex + 1}`);
+      sectionElement.appendChild(description);
+
+      const date = this.createElement("p");
+      date.classList.add(`date${articleIndex + 1}`);
+      sectionElement.appendChild(date);
+
+      const sensedButtons = document.querySelectorAll(".sensedButton");
+
+      sensedButtons.forEach((button) => {
+        let selectedArticles = this.results["전체보기"];
+        if (selectedArticles && selectedArticles[articleIndex]) {
+          // 둘다 존재한다면
+          const article = selectedArticles[articleIndex];
+
+          if (article.urlToImage) {
+            //가 존재한다면
+            image.src = article.urlToImage;
+          }
+
+          title.textContent = article.title || "No Title";
+          description.textContent = article.description || "No Description";
+          reporter.textContent = `Reporter: ${article.author || "Unknown"}`;
+          date.textContent = `Published At: ${
+            article.publishedAt || "No Date"
+          }`;
+        }
+
+        button.addEventListener("click", () => {
+          selectedArticles = this.results[button.textContent];
+          if (selectedArticles && selectedArticles[articleIndex]) {
+            // 둘다 존재한다면
+            const article = selectedArticles[articleIndex];
+
+            if (article.urlToImage) {
+              //가 존재한다면
+              image.src = article.urlToImage;
+            }
+
+            reporter.textContent = `Reporter: ${article.author || "Unknown"}`;
+            title.textContent = article.title || "No Title";
+            description.textContent = article.description || "No Description";
+            date.textContent = `Published At: ${
+              article.publishedAt || "No Date"
+            }`;
+          }
+        });
+      });
+    }
   }
 }
 

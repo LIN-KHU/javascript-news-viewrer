@@ -89,3 +89,132 @@ top: 147px;
 background: #CECECE;
 
 }
+
+/* section */
+.image1 {
+  width: 400px;
+  height: 205.96px;
+  left: 508px;
+  top: 255px;
+  border-radius: 20px;
+}
+
+.reporter1 {
+  width: 78px;
+  height: 14px;
+  left: 508px;
+  top: 586px;
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  color: #8E8E8E;
+}
+
+.title1 {
+  width: 400px;
+  height: 40px;
+  left: 506px;
+  top: 397px;
+  font-family: 'Roboto Flex';
+  font-style: italic;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 20px;
+  letter-spacing: 0.1em;
+  color: #000000;
+}
+
+.description1 {
+  width: 400px;
+  height: 42px;
+  left: 508px;
+  top: 531px;
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  color: #5E5E5E;
+}
+
+.date1 {
+  width: 70px;
+  height: 14px;
+  left: 586px;
+  top: 586px;
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  color: #8E8E8E;
+}
+
+.image2 {
+  width: 400px;
+  height: 205.96px;
+  left: 508px;
+  top: 643px;
+  border-radius: 20px;
+}
+
+.reporter2 {
+  width: 78px;
+  height: 14px;
+  left: 508px;
+  top: 974px;
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  color: #5E5E5E;
+}
+
+.title2 {
+  width: 400px;
+  height: 40px;
+  left: 508px;
+  top: 868px;
+  font-family: 'Roboto Flex';
+  font-style: italic;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 20px;
+  letter-spacing: 0.1em;
+  color: #000000;
+}
+
+.description2 {
+  width: 400px;
+  height: 42px;
+  left: 508px;
+  top: 919px;
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  color: #8E8E8E;
+}
+
+.date2 {
+  width: 70px;
+  height: 14px;
+  left: 586px;
+  top: 974px;
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  color: #5E5E5E;
+}
