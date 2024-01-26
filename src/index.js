@@ -2,6 +2,55 @@ import "./styles";
 import { TAP_NAME } from "./assets/TAB_NAME.js";
 require("dotenv").config();
 
+class Header {
+  constructor(appElement) {
+    //매개변수로 입력받음
+    this.headerElement = this.createElement("header");
+    this.headerElement.classList.add("header");
+
+    const linkhuText = this.createElement("span", "LINKHU");
+    linkhuText.classList.add("headerFont", "linkhuText");
+    const newsText = this.createElement("span", " - NEWS");
+    newsText.classList.add("headerFont", "newsText");
+
+    appElement.appendChild(this.headerElement);
+    this.headerElement.appendChild(linkhuText);
+    this.headerElement.appendChild(newsText);
+  }
+
+  createElement(tag, textContent = "") {
+    const element = document.createElement(tag);
+    element.textContent = textContent;
+    return element;
+  }
+}
+
+class Nav {
+  constructor(appElement) {
+    this.navElement = this.createElement("nav");
+    TAP_NAME.forEach((nav) => {
+      const tabElement = this.createElement("button", nav.ko);
+      tabElement.classList.add("tab", "sensedButton");
+      this.navElement.appendChild(tabElement);
+    });
+    appElement.appendChild(this.navElement);
+
+    const underline1 = this.createElement("div");
+    underline1.classList.add("underline1");
+    appElement.appendChild(underline1);
+
+    const underline2 = this.createElement("div");
+    underline2.classList.add("underline2");
+    appElement.appendChild(underline2);
+  }
+
+  createElement(tag, textContent = "") {
+    const element = document.createElement(tag);
+    element.textContent = textContent;
+    return element;
+  }
+}
+
 class App {
   constructor() {
     this.appElement = document.getElementById("app");
@@ -19,44 +68,19 @@ class App {
   }
 
   createHeader() {
-    const headerElement = this.createElement("header");
-    headerElement.classList.add("header");
-
-    const linkhuText = this.createElement("span", "LINKHU");
-    linkhuText.classList.add("headerFont", "linkhuText");
-    const newsText = this.createElement("span", " - NEWS");
-    newsText.classList.add("headerFont", "newsText");
-
-    this.appElement.appendChild(headerElement);
-    headerElement.appendChild(linkhuText);
-    headerElement.appendChild(newsText);
+    this.header = new Header(this.appElement);
   }
 
   createNav() {
-    const navElement = this.createElement("nav");
-    TAP_NAME.forEach((nav) => {
-      const tabElement = this.createElement("button", nav.ko);
-      tabElement.classList.add("tab", "sensedButton");
-      navElement.appendChild(tabElement);
-    });
-    this.appElement.appendChild(navElement);
-
-    const underline1 = this.createElement("div");
-    underline1.classList.add("underline1");
-    this.appElement.appendChild(underline1);
-
-    const underline2 = this.createElement("div");
-    underline2.classList.add("underline2");
-    this.appElement.appendChild(underline2);
+    this.nav = new Nav(this.appElement);
   }
 
-  async start() {
-    await this.apiManager();
-    this.createAndPutContents();
+  start() {
+    this.apiManager().then(() => this.createAndPutContents());
   }
 
   async apiManager() {
-    const apiKey = "37e4270349374e67858fd355884ef83c";
+    const apiKey = process.env.API_KEY;
 
     try {
       this.results = {};
@@ -94,23 +118,23 @@ class App {
 
     for (let articleIndex = 0; articleIndex < 2; articleIndex++) {
       const image = this.createElement("img");
-      image.classList.add(`image${articleIndex + 1}`);
+      image.classList.add(`image`);
       sectionElement.appendChild(image);
 
       const reporter = this.createElement("p");
-      reporter.classList.add(`reporter${articleIndex + 1}`);
+      reporter.classList.add(`reporter`);
       sectionElement.appendChild(reporter);
 
       const title = this.createElement("p");
-      title.classList.add(`title${articleIndex + 1}`);
+      title.classList.add(`title`);
       sectionElement.appendChild(title);
 
       const description = this.createElement("p");
-      description.classList.add(`description${articleIndex + 1}`);
+      description.classList.add(`description`);
       sectionElement.appendChild(description);
 
       const date = this.createElement("p");
-      date.classList.add(`date${articleIndex + 1}`);
+      date.classList.add(`date`);
       sectionElement.appendChild(date);
 
       const sensedButtons = document.querySelectorAll(".sensedButton");
