@@ -29,4 +29,4 @@ const TAP_NAME = [
   },
 ];
 
-export default TAP_NAME;
+export { TAP_NAME };
