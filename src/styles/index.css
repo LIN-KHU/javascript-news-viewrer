@@ -91,15 +91,20 @@ background: #CECECE;
 }
 
 /* section */
+
 .image {
   width: 400px;
   height: 205.96px;
   left: 508px;
   top: 255px;
   border-radius: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .reporter {
+  white-space: nowrap;
   width: 78px;
   height: 14px;
   left: 508px;
@@ -111,6 +116,7 @@ background: #CECECE;
   line-height: 14px;
   letter-spacing: 0.1em;
   color: #8E8E8E;
+  
 }
 
 .title {
@@ -142,6 +148,7 @@ background: #CECECE;
 }
 
 .date {
+  white-space: nowrap;
   width: 70px;
   height: 14px;
   left: 586px;
@@ -153,4 +160,71 @@ background: #CECECE;
   line-height: 14px;
   letter-spacing: 0.1em;
   color: #8E8E8E;
+}
+
+
+.comment {
+  position: absolute;
+  width: 400px;
+  height: auto;
+  left: 508px;
+  top: 226px;
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.comment2{
+  /* Rectangle 45 */
+
+
+width: 363px;
+height: 415px;
+left: 529px;
+top: 345px;
+
+background: #D9D9D9;
+border-radius: 5px;
+
+}
+
+.closeButton {
+  /* x */
+  position: absolute;
+  width: 12px;
+  height: 24px;
+  right: 0;
+  top: 0;  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 100px;
+  line-height: 24px;
+  color: #000000;
+}
+
+
+.commentTitle {
+  width: 100%; /* 전체 너비로 설정 */
+  height: auto; /* 높이를 자동으로 조정하도록 수정 */
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
+  margin-bottom: 10px; /* 적절한 아래 여백 추가 */
+}
+
+.commentDescription {
+  width: 100%; /* 전체 너비로 설정 */
+  height: auto; /* 높이를 자동으로 조정하도록 수정 */
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #000000;
+  margin-bottom: 10px; /* 적절한 아래 여백 추가 */
 }

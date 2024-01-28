@@ -55,6 +55,7 @@ class App {
   constructor() {
     this.appElement = document.getElementById("app");
     this.results = [];
+    this.countPeople = 0;
 
     this.createHeader();
     this.createNav();
@@ -103,7 +104,7 @@ class App {
 
         const data = await response.json();
 
-        this.results[topic] = data.articles.slice(0, 2);
+        this.results[topic] = data.articles.slice(0, 10);
       });
 
       await Promise.all(apiPromises);
@@ -114,28 +115,35 @@ class App {
 
   createAndPutContents() {
     const sectionElement = this.createElement("section");
+    sectionElement.classList.add("section");
     this.appElement.appendChild(sectionElement);
 
-    for (let articleIndex = 0; articleIndex < 2; articleIndex++) {
+    const sectionElements = [];
+    for (let articleIndex = 0; articleIndex < 10; articleIndex++) {
       const image = this.createElement("img");
       image.classList.add(`image`);
-      sectionElement.appendChild(image);
 
       const reporter = this.createElement("p");
       reporter.classList.add(`reporter`);
-      sectionElement.appendChild(reporter);
 
       const title = this.createElement("p");
       title.classList.add(`title`);
-      sectionElement.appendChild(title);
 
       const description = this.createElement("p");
       description.classList.add(`description`);
-      sectionElement.appendChild(description);
 
       const date = this.createElement("p");
       date.classList.add(`date`);
-      sectionElement.appendChild(date);
+
+      const tempSection = this.createElement("section");
+      sectionElement.classList.add("section");
+      sectionElement.appendChild(tempSection);
+      tempSection.appendChild(image);
+      tempSection.appendChild(reporter);
+      tempSection.appendChild(title);
+      tempSection.appendChild(description);
+      tempSection.appendChild(date);
+      sectionElements.push(tempSection);
 
       const sensedButtons = document.querySelectorAll(".sensedButton");
 
@@ -178,7 +186,68 @@ class App {
           }
         });
       });
+      this.createCommentSection(sectionElements);
     }
+  }
+
+  createCommentSection(sectionElements) {
+    sectionElements.forEach((section) => {
+      section.addEventListener("click", () => {
+        const commentSection = this.createElement("section");
+        commentSection.classList.add("comment");
+
+        const articleTitle = section.querySelector(".title").textContent;
+        const titleElement = this.createElement("p", articleTitle);
+        titleElement.classList.add("commentTitle");
+
+        const articleDescription =
+          section.querySelector(".description").textContent;
+        const descriptionElement = this.createElement("p", articleDescription);
+        descriptionElement.classList.add("commentDescription");
+
+        const commentSection2 = this.createElement("section");
+        commentSection2.classList.add("comment2");
+
+        const commentForm = this.createElement("form");
+
+        const commentInput = this.createElement("input");
+        commentInput.setAttribute("type", "text");
+        commentInput.setAttribute("placeholder", "댓글을 입력하세요");
+
+        const submitButton = this.createElement("button", "댓글 작성");
+
+        commentForm.appendChild(commentInput);
+        commentForm.appendChild(submitButton);
+
+        commentSection2.appendChild(commentForm);
+
+        commentForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const commentText = commentInput.value;
+          this.submitComment(commentText, commentSection2);
+        });
+
+        const closeButton = this.createElement("button", "X");
+        closeButton.classList.add("X");
+        closeButton.addEventListener("click", () => commentSection.remove());
+
+        commentSection.appendChild(titleElement);
+        commentSection.appendChild(descriptionElement);
+        commentSection.appendChild(commentSection2);
+        commentSection.appendChild(closeButton);
+
+        this.appElement.appendChild(commentSection);
+
+        console.log(section);
+      });
+    });
+  }
+
+  submitComment(commentText, commentSection2) {
+    this.countPeople++;
+    const commentContent = `익명 ${this.countPeople}: ${commentText}`;
+    const commentElement = this.createElement("p", commentContent);
+    commentSection2.appendChild(commentElement);
   }
 }
 
