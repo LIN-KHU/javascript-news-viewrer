@@ -14,3 +14,143 @@ body {
   margin: auto;
   background-color: white;
 }
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 480px;
+  height: 92px;
+  flex-shrink: 0;
+  background: #466AEA;
+  padding-left: 20px;
+
+  /*LINKHU*/
+  color: #FFF;
+  font-family: Inter;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+
+  /*news*/
+  color: #FFF;
+  font-family: Inter;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+nav {
+  background-color: #FFF;
+  /* 추가된 스타일: 가로 정렬을 위한 Flexbox 사용 */
+  width: 480px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: space-between;
+  padding-left: 10px;
+
+  position: relative;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+
+  position: relative;
+}
+
+nav li {
+  /*margin-right: 10px; 이러면 마지막 항목도 띄어지니까.*/
+  cursor: pointer;
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 2px;
+  /*width: 39.731px;*/
+  height: 24px;
+
+  position: relative;
+}
+
+nav li:not(:last-child) {
+  margin-right: 13px; /* 마지막 요소 이외의 모든 요소에 오른쪽 여백 추가 */
+}
+
+nav li::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: transparent; /* 초기에 투명한 색상 */
+  transition: width 0.3s ease; /* 너비 변경에 대한 전환 효과 설정 */
+}
+
+nav li.active::after {
+  width: 100%; /* 클릭된 항목에 대한 밑줄 너비 100%로 변경 */
+  background-color: #466AEA; /* 클릭된 항목에 대한 밑줄 색상 변경 */
+}
+
+nav li.active {
+  color: #466AEA;
+  font-weight: bold;
+}
+
+nav li:hover::before {
+  background-color: #466AEA; /* 호버 시에 회색 밑줄을 파란색으로 변경 */
+}
+
+img {
+  width: 410px;
+  height: 205.962px;
+  flex-shrink: 0;
+  border-radius: 20px;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+section > div {
+  margin: 10px; 
+  text-align: center;
+}
+
+section > div > h2 {
+  width: 100%; 
+  box-sizing: border-box; 
+  text-align: left;
+}
+
+section > div > p {
+  text-align: left; /* 기사 내용을 왼쪽 정렬로 유지 */
+}
+
+section > div > p strong {
+  display: inline-block; /* strong 태그를 블록 요소로 변경하여 왼쪽 정렬 적용 */
+  text-align: left; /* strong 태그 내용을 왼쪽 정렬로 유지 */
+}
+
+section > div > p > strong::after {
+  content: ' | '; /* 각 strong 태그 뒤에 구분을 위한 구분자 추가 */
+}
+
+p {
+  font-size: smaller;
+  color: gray;
+}
+
+.active::after{
+  text-decoration: underline;
+}
