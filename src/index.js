@@ -1,21 +1,18 @@
 import "./styles";
 require("dotenv").config();
-import TAP_NAME from "./assets/TAB_NAME";
+//import TAP_NAME from "./assets/TAB_NAME";
 
-class App {
+/*class App {
   constructor() {
     this.apiKey = process.env.API_KEY || '40a4a566f0eb4cb5aa724df7ddc58ad7';
     this.selectedTap = null;
 
     const appElement = document.getElementById("app");
-    //appElement.innerHTML = "<div>Hello :D</div>";
 
-    // Header
     const headerElement = document.createElement("header");
     headerElement.innerHTML = "<h1>LINKHU-news</h1>";
     appElement.appendChild(headerElement);
 
-    // Navigation
     const navElement = document.createElement("nav");
     const navListElement = document.createElement("ul");
 
@@ -25,13 +22,12 @@ class App {
       tapItem.dataset.tap = tap.en;
       tapItem.addEventListener("click", this.handleTapClick.bind(this));
       
-      const underline = document.createElement('div'); //밑줄 생성.
+      const underline = document.createElement('div'); 
       underline.classList.add('underline');
       tapItem.appendChild(underline);
 
       navListElement.appendChild(tapItem);
 
-      //전체보기는 기본값으로 파란색.
       if (tap.en === 'all') {
         tapItem.classList.add('active');
         underline.style.width = '100%';
@@ -41,11 +37,9 @@ class App {
     navElement.appendChild(navListElement);
     appElement.appendChild(navElement);
 
-    // Section
     this.sectionElement = document.createElement("section");
     appElement.appendChild(this.sectionElement);
 
-    //
     this.fetchData();
   }
 
@@ -75,36 +69,34 @@ class App {
   }
 
   displayData(data) {
-    this.sectionElement.innerHTML = ""; //초기화
+    this.sectionElement.innerHTML = "";
 
     const articles = data.articles;
     if (articles && articles.length > 0) {
-      // Shuffle
+      
       const shuffledArticles = this.shuffleArray(articles).slice(0, 2);
 
       shuffledArticles.forEach((article, index) => {
         const articleContainer = document.createElement("div");
-        articleContainer.id = `article-${index+1}`; //id 추가.
+        articleContainer.id = `article-${index+1}`; 
 
-        // Image
+
         if (article.urlToImage) {
           const imageElement = document.createElement("img");
           imageElement.src = article.urlToImage;
-          imageElement.alt = "Article Image";
+          const imageAltText = article.title ? article.title : "Article Image";
+          imageElement.alt = imageAltText;
           articleContainer.appendChild(imageElement);
         }
 
-        // Title
         const titleElement = document.createElement("h2");
         titleElement.textContent = article.title;
         articleContainer.appendChild(titleElement);
 
-        // content
         const contentElement = document.createElement("p");
         contentElement.textContent = article.description;
         articleContainer.appendChild(contentElement);
 
-        // Author and Date
         const authorDateElement = document.createElement("p");
         authorDateElement.innerHTML = `<strong>Author:</strong> ${article.author || 'Unknown'} | <strong>Date:</strong> ${new Date(article.publishedAt).toLocaleDateString()}`;
         articleContainer.appendChild(authorDateElement);
@@ -112,7 +104,7 @@ class App {
         this.sectionElement.appendChild(articleContainer);
       });
     } else {
-      // 기사 없을 때
+   
       const noDataElement = document.createElement("p");
       noDataElement.textContent = "No articles available for this category.";
       this.sectionElement.appendChild(noDataElement);
@@ -142,6 +134,56 @@ class App {
       [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
+  }
+}
+
+const app = new App();*/
+
+
+import Header from "./component/Header";
+import TabList from "./component/Tabs/TabList";
+import NewsList from "./component/Section/NewsList";
+
+class App {
+  constructor() {
+    this.apiKey = process.env.API_KEY || '40a4a566f0eb4cb5aa724df7ddc58ad7';
+    this.selectedTap = null;
+
+    this.header = new Header();
+    this.tabList = new TabList(this.fetchData.bind(this));
+    this.newsList = new NewsList();
+
+    const appElement = document.getElementById("app");
+    appElement.appendChild(this.header.getElement());
+    appElement.appendChild(this.tabList.getElement());
+    appElement.appendChild(this.newsList.getElement());
+
+    this.fetchData();
+  }
+
+  async fetchData(selectedTap) {
+    try {
+      let apiUrl;
+
+      if (selectedTap && selectedTap !== "all") {
+        apiUrl = `http://newsapi.org/v2/top-headlines?country=kr&category=${selectedTap}&apiKey=${this.apiKey}`;
+      } else {
+        apiUrl = `http://newsapi.org/v2/top-headlines?country=kr&apiKey=${this.apiKey}`;
+      }
+
+      const response = await fetch(apiUrl);
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch data. Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("API Response:", data);
+      this.newsList.update(data.articles);
+
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+    }
   }
 }
 
