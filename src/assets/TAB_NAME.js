@@ -1,7 +1,7 @@
 const TAP_NAME = [
   {
-    ko: "전체보기",
-    en: "all",
+    ko: "전체",
+    en: "general",
   },
   {
     ko: "경영",
