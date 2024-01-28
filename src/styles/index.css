@@ -8,42 +8,6 @@ body {
   padding: 0;
 }
 
-#top{
-  background-color: #466AEA;
-  width: 480px;
-  height: 92px;
-  color:#dedede; 
-  font-size: 48px; 
-  font-weight: bold;
-  line-height: 92px;
-  padding-left:  20px; 
-}
-
-img {
-  border-radius: 20px; 
-  width: 400px;
-  height: 205px;
-  object-fit: cover;
-}
-
-#main{
-  width: 480px;
-  height: fit-content;
-}
-
-
-.news-item {
-  margin: 0 40px; 
-}
-
-.news-item p {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  -webkit-line-clamp: 3; 
-  text-overflow: ellipsis;
-}
-
 #app {
   max-width: 480px;
   min-height: 100vh;
