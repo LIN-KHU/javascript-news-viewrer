@@ -1,4 +1,4 @@
-const TAP_NAME = [
+const TAB_NAME = [
   {
     ko: "전체",
     en: "general",
@@ -29,4 +29,4 @@ const TAP_NAME = [
   },
 ];
 
-export default TAP_NAME;
+export default TAB_NAME;
