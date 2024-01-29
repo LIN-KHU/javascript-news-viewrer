@@ -1,7 +1,7 @@
-const TAP_NAME = [
+const TAB_NAME = [
   {
-    ko: "전체보기",
-    en: "all",
+    ko: "전체",
+    en: "general",
   },
   {
     ko: "경영",
@@ -29,4 +29,4 @@ const TAP_NAME = [
   },
 ];
 
-export default TAP_NAME;
+export default TAB_NAME;
