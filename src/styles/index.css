@@ -167,13 +167,16 @@ background: #CECECE;
   position: absolute;
   width: 400px;
   height: auto;
-  left: 508px;
-  top: 226px;
-  background: #693737;
+  left: 150px; /* 수정된 값 */
+  top: 250px; /* 수정된 값 */
+  background: #FFFFFF;
   border-radius: 20px;
   padding: 20px;
   box-sizing: border-box;
+  border-width: 100px;
+  border-color: #000000;
 }
+
 
 .comment2{
   /* Rectangle 45 */

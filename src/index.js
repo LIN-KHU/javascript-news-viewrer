@@ -250,17 +250,35 @@ class App {
       storedComments.forEach((commentText) => {
         const commentElement = this.createElement("p", commentText);
         commentSection2.appendChild(commentElement);
+
+        const deleteButton = this.createElement("button", "삭제");
+        commentSection2.appendChild(deleteButton);
+        deleteButton.addEventListener("click", () => {
+          this.deleteComment(commentElement, deleteButton);
+        });
       });
     }
   }
 
+  deleteComment(commentElement, deleteButton) {
+    commentElement.remove();
+    deleteButton.remove();
+  }
+
   submitComment(commentText, commentSection2) {
+    const storedComments = JSON.parse(localStorage.getItem("comments")) || [];
+    this.countPeople = storedComments.length;
     this.countPeople++;
     const commentContent = `익명 ${this.countPeople}: ${commentText}`;
     const commentElement = this.createElement("p", commentContent);
     commentSection2.appendChild(commentElement);
 
-    const storedComments = JSON.parse(localStorage.getItem("comments")) || [];
+    const deleteButton = this.createElement("button", "삭제");
+    commentSection2.appendChild(deleteButton);
+    deleteButton.addEventListener("click", () => {
+      this.deleteComment(commentElement, deleteButton);
+    });
+
     // 새 댓글을 배열에 추가
     storedComments.push(commentContent);
     // 배열을 다시 로컬 스토리지에 저장
@@ -273,8 +291,12 @@ class App {
 
     resetButton.addEventListener("click", () => {
       localStorage.removeItem("comments");
-      // 여기에서 commentSection2 등에 대한 추가적인 처리를 수행할 수 있습니다.
-      // 예: commentSection2.innerHTML = ""; // 모든 댓글 섹션을 비움
+
+      // "p" 태그를 모두 찾아서 제거
+      const commentElements = commentSection2.getElementsByTagName("p");
+      Array.from(commentElements).forEach((commentElement) => {
+        commentElement.remove();
+      });
     });
   }
 
