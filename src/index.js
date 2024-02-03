@@ -186,13 +186,14 @@ class App {
           }
         });
       });
-      this.createCommentSection(sectionElements);
     }
+    this.createCommentSection(sectionElements);
   }
 
   createCommentSection(sectionElements) {
     sectionElements.forEach((section) => {
       section.addEventListener("click", () => {
+        console.log(section);
         const commentSection = this.createElement("section");
         commentSection.classList.add("comment");
 
@@ -229,7 +230,6 @@ class App {
 
         const closeButton = this.createElement("button", "X");
         closeButton.classList.add("X");
-        closeButton.addEventListener("click", () => commentSection.remove());
 
         commentSection.appendChild(titleElement);
         commentSection.appendChild(descriptionElement);
@@ -237,17 +237,75 @@ class App {
         commentSection.appendChild(closeButton);
 
         this.appElement.appendChild(commentSection);
-
-        console.log(section);
+        this.closeComment(commentSection, closeButton);
+        this.loadExistingComments(commentSection2);
+        // this.resetLocalStorage(commentSection2);
       });
     });
   }
 
+  loadExistingComments(commentSection2) {
+    const storedComments = JSON.parse(localStorage.getItem("comments"));
+    if (storedComments && storedComments.length > 0) {
+      storedComments.forEach((commentText) => {
+        const commentElement = this.createElement("p", commentText);
+        commentSection2.appendChild(commentElement);
+
+        const deleteButton = this.createElement("button", "삭제");
+        commentSection2.appendChild(deleteButton);
+        deleteButton.addEventListener("click", () => {
+          this.deleteComment(commentElement, deleteButton);
+        });
+      });
+    }
+  }
+
+  deleteComment(commentElement, deleteButton) {
+    commentElement.remove();
+    deleteButton.remove();
+  }
+
   submitComment(commentText, commentSection2) {
+    const storedComments = JSON.parse(localStorage.getItem("comments")) || [];
+    this.countPeople = storedComments.length;
     this.countPeople++;
     const commentContent = `익명 ${this.countPeople}: ${commentText}`;
     const commentElement = this.createElement("p", commentContent);
     commentSection2.appendChild(commentElement);
+
+    const deleteButton = this.createElement("button", "삭제");
+    commentSection2.appendChild(deleteButton);
+    deleteButton.addEventListener("click", () => {
+      this.deleteComment(commentElement, deleteButton);
+    });
+
+    // 새 댓글을 배열에 추가
+    storedComments.push(commentContent);
+    // 배열을 다시 로컬 스토리지에 저장
+    localStorage.setItem("comments", JSON.stringify(storedComments));
+  }
+
+  resetLocalStorage(commentSection2) {
+    const resetButton = this.createElement("button", "전체댓글삭제");
+    commentSection2.appendChild(resetButton);
+
+    resetButton.addEventListener("click", () => {
+      localStorage.removeItem("comments");
+
+      // "p" 태그를 모두 찾아서 제거
+      const commentElements = commentSection2.getElementsByTagName("p");
+      Array.from(commentElements).forEach((commentElement) => {
+        commentElement.remove();
+      });
+    });
+  }
+
+  closeComment(commentSection, closeButton) {
+    closeButton.addEventListener("click", () => {
+      if (commentSection.parentNode) {
+        commentSection.parentNode.removeChild(commentSection);
+      }
+    });
   }
 }
 
