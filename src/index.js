@@ -94,8 +94,8 @@ class App {
       <p>${parseOpinion.content}</p>
       `;
       
-      opinionTitle.value = parseOpinion.title || "";
-      opinionContent.value = parseOpinion.content || "";
+      opinionTitle.value = parseOpinion.title;
+      opinionContent.value = parseOpinion.content;
 
       const saveButton = document.getElementById("save-opinion");
       let editButton = document.getElementById("edit-opinion");
