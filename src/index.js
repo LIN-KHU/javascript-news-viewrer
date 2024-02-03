@@ -111,8 +111,9 @@ class App {
         editButton.id = "edit-opinion";
   
         editButton.addEventListener("click", () => {
-          opinionTitle.disabled = false;
-          opinionContent.disabled = false;
+          const opinion = { title: opinionTitle.value, content: opinionContent.value };
+          localStorage.setItem(articleTitle, JSON.stringify(opinion));
+          modal.style.display = "none";
         });
   
         opinionForm.appendChild(editButton);
