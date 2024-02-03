@@ -186,13 +186,14 @@ class App {
           }
         });
       });
-      this.createCommentSection(sectionElements);
     }
+    this.createCommentSection(sectionElements);
   }
 
   createCommentSection(sectionElements) {
     sectionElements.forEach((section) => {
       section.addEventListener("click", () => {
+        console.log(section);
         const commentSection = this.createElement("section");
         commentSection.classList.add("comment");
 
@@ -229,7 +230,6 @@ class App {
 
         const closeButton = this.createElement("button", "X");
         closeButton.classList.add("X");
-        closeButton.addEventListener("click", () => commentSection.remove());
 
         commentSection.appendChild(titleElement);
         commentSection.appendChild(descriptionElement);
@@ -237,10 +237,21 @@ class App {
         commentSection.appendChild(closeButton);
 
         this.appElement.appendChild(commentSection);
-
-        console.log(section);
+        this.closeComment(commentSection, closeButton);
+        this.loadExistingComments(commentSection2);
+        // this.resetLocalStorage(commentSection2);
       });
     });
+  }
+
+  loadExistingComments(commentSection2) {
+    const storedComments = JSON.parse(localStorage.getItem("comments"));
+    if (storedComments && storedComments.length > 0) {
+      storedComments.forEach((commentText) => {
+        const commentElement = this.createElement("p", commentText);
+        commentSection2.appendChild(commentElement);
+      });
+    }
   }
 
   submitComment(commentText, commentSection2) {
@@ -248,6 +259,31 @@ class App {
     const commentContent = `익명 ${this.countPeople}: ${commentText}`;
     const commentElement = this.createElement("p", commentContent);
     commentSection2.appendChild(commentElement);
+
+    const storedComments = JSON.parse(localStorage.getItem("comments")) || [];
+    // 새 댓글을 배열에 추가
+    storedComments.push(commentContent);
+    // 배열을 다시 로컬 스토리지에 저장
+    localStorage.setItem("comments", JSON.stringify(storedComments));
+  }
+
+  resetLocalStorage(commentSection2) {
+    const resetButton = this.createElement("button", "전체댓글삭제");
+    commentSection2.appendChild(resetButton);
+
+    resetButton.addEventListener("click", () => {
+      localStorage.removeItem("comments");
+      // 여기에서 commentSection2 등에 대한 추가적인 처리를 수행할 수 있습니다.
+      // 예: commentSection2.innerHTML = ""; // 모든 댓글 섹션을 비움
+    });
+  }
+
+  closeComment(commentSection, closeButton) {
+    closeButton.addEventListener("click", () => {
+      if (commentSection.parentNode) {
+        commentSection.parentNode.removeChild(commentSection);
+      }
+    });
   }
 }
 
