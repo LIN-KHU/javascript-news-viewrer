@@ -68,32 +68,13 @@ class App {
     const modal = document.getElementById("modal");
     const closeModal = document.querySelector(".close-modal");
     const opinionForm = document.getElementById("opinion-form");
-    const opinionTitleInput = document.getElementById("opinion-title");
-    const opinionContentTextArea = document.getElementById("opinion-content");
+    const opinionTitle = document.getElementById("opinion-title");
+    const opinionContent = document.getElementById("opinion-content");
 
     modal.style.display = "block";
 
-    const storedOpinion = localStorage.getItem(articleTitle);
-    if (storedOpinion) {
-      const parseOpinion = JSON.parse(storedOpinion);
-
-      opinionTitleInput.value = parseOpinion.title || "";
-      opinionContentTextArea.value = parseOpinion.content || "";
-    } else {
-      opinionTitleInput.value = "";
-      opinionContentTextArea.value = "";
-    }
     closeModal.addEventListener("click", () => {
       modal.style.display = "none";
-    });
-
-    const saveOpinionButton = document.getElementById("save-opinion");
-    saveOpinionButton.addEventListener("click", () => {
-      const opinion = { title: opinionTitleInput.value, content: opinionContentTextArea.value };
-  
-      localStorage.setItem(articleTitle, JSON.stringify(opinion));
-      modal.style.display = "none";
-
     });
 
     window.addEventListener("click", (event) => {
@@ -101,28 +82,77 @@ class App {
         modal.style.display = "none";
       }
     });
+    
+    const storedOpinion = localStorage.getItem(articleTitle);
+    
+    if (storedOpinion) {
+      const parseOpinion = JSON.parse(storedOpinion);
 
-    const editOpinionButton = document.getElementById("edit-opinion");
-    if (editOpinionButton) {
-      editOpinionButton.remove();
+      const SavedOpinion = document.getElementById("modal-header");
+      SavedOpinion.innerHTML = `
+      <h3>${parseOpinion.title}</h3>
+      <p>${parseOpinion.content}</p>
+      `;
+      
+      opinionTitle.value = parseOpinion.title || "";
+      opinionContent.value = parseOpinion.content || "";
+
+      const saveButton = document.getElementById("save-opinion");
+      let editButton = document.getElementById("edit-opinion");
+      let deleteButton = document.getElementById("delete-opinion");
+
+      if(saveButton) {
+        saveButton.remove();
+      }
+
+      if (!editButton) {
+        editButton = document.createElement("button");
+        editButton.textContent = "edit";
+        editButton.id = "edit-opinion";
+  
+        editButton.addEventListener("click", () => {
+          opinionTitle.disabled = false;
+          opinionContent.disabled = false;
+        });
+  
+        opinionForm.appendChild(editButton);
+      }
+  
+      if (!deleteButton) {
+        deleteButton = document.createElement("button");
+        deleteButton.textContent = "delete";
+        deleteButton.id = "delete-opinion";
+  
+        deleteButton.addEventListener("click", () => {
+          localStorage.removeItem(articleTitle);
+          modal.style.display = "none";
+        });
+  
+        opinionForm.appendChild(deleteButton);
+      }
+    } else {
+      opinionTitle.value = "";
+      opinionContent.value = "";
+
+      const saveButton = document.getElementById("save-opinion");
+      const editButton = document.getElementById("edit-opinion");
+      const deleteButton = document.getElementById("delete-opinion");
+
+      saveButton.textContent = "save";
+      saveButton.addEventListener("click", () => {
+        const opinion = { title: opinionTitle.value, content: opinionContent.value };
+        localStorage.setItem(articleTitle, JSON.stringify(opinion));
+        modal.style.display = "none";
+      });
+
+      if (editButton) {
+        editButton.remove();
+      }
+
+      if (deleteButton) {
+        deleteButton.remove();
+      }
     }
-
-    const editButton = document.createElement("button");
-    editButton.textContent = "수정하기";
-    editButton.id = "edit-opinion";
-
-    editButton.addEventListener("click", () => {
-      editButton.remove();
-
-      opinionTitleInput.disabled = false;
-      opinionContentTextArea.disabled = false;
-
-      saveOpinionButton.textContent = "수정 완료";
-    });
-
-    saveOpinionButton.textContent = "저장";
-
-    opinionForm.appendChild(editButton);
   }
 }
 
