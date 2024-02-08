@@ -1,8 +1,10 @@
 import Modal from "./Modal";
 
 class ExistingModal extends Modal {
-  constructor(existingData) {
+  constructor(existingData, storageKey) {
     super();
+
+    this.storageKey = storageKey;
 
     if (existingData) {
       this.titleInput.value = existingData.title || "";
@@ -31,13 +33,13 @@ class ExistingModal extends Modal {
       content: updatedContent
     };
 
-    localStorage.setItem('savedData', JSON.stringify(updatedData));
+    localStorage.setItem(this.storageKey, JSON.stringify(updatedData));
 
     this.closeModal();
   }
 
   handleDelete() {
-    localStorage.removeItem('savedData');
+    localStorage.removeItem(this.storageKey);
 
     this.closeModal();
   }

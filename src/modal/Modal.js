@@ -1,5 +1,5 @@
 class Modal {
-    constructor() {
+    constructor(storageKey, article) {
         this.modalElement = document.createElement("div");
         this.modalElement.className = "modal";
 
@@ -9,7 +9,7 @@ class Modal {
         this.modalElement.appendChild(this.modalTitle);
 
         this.titleInputLabel = document.createElement("div");
-        this.titleInputLabel.textContent = "제목"; 
+        this.titleInputLabel.textContent = "제목";
         this.titleInputLabel.classList.add("modalInputLabel");
         this.modalElement.appendChild(this.titleInputLabel);
 
@@ -18,7 +18,7 @@ class Modal {
         this.modalElement.appendChild(this.titleInput);
 
         this.contentInputLabel = document.createElement("div");
-        this.contentInputLabel.textContent = "내용"; 
+        this.contentInputLabel.textContent = "내용";
         this.contentInputLabel.classList.add("modalInputLabel");
         this.modalElement.appendChild(this.contentInputLabel);
 
@@ -27,7 +27,7 @@ class Modal {
 
         this.saveButton = document.createElement("button");
         this.saveButton.textContent = "저장";
-        this.saveButton.addEventListener("click", this.handleSave.bind(this));
+        this.saveButton.addEventListener("click", this.handleSave.bind(this, storageKey, article));
         this.modalElement.appendChild(this.saveButton);
 
         this.closeButton = document.createElement("div");
@@ -37,12 +37,14 @@ class Modal {
         this.modalElement.appendChild(this.closeButton);
     }
 
-    handleSave() {
+    handleSave(storageKey, article) {
         const title = this.titleInput.value;
         const content = this.contentInput.value;
 
         if (title && content) {
-            localStorage.setItem('savedData', JSON.stringify({ title, content }));
+            const savedData = JSON.parse(localStorage.getItem(storageKey)) || {};
+            const updatedData = { ...savedData, title, content };
+            localStorage.setItem(storageKey, JSON.stringify(updatedData));
             this.closeModal();
         } else {
             this.closeModal();

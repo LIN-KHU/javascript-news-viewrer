@@ -24,12 +24,15 @@ class NewsItem {
     const authorDateComponent = new AuthorDate(article.author, article.publishedAt);
     this.element.appendChild(authorDateComponent.getElement());
 
-    this.element.addEventListener("click", this.handleArticleClick.bind(this));
+    this.element.addEventListener("click", () => this.handleArticleClick(article)); 
   }
 
-  handleArticleClick() {
-    const existingData = JSON.parse(localStorage.getItem('savedData'));
-    const modal = existingData ? new ExistingModal(existingData) : new Modal();
+  handleArticleClick(article) {
+    const existingData = JSON.parse(localStorage.getItem(`savedData-${article.title}`)) || {};
+    const modal = Object.keys(existingData).length > 0
+      ? new ExistingModal(existingData, `savedData-${article.title}`)
+      : new Modal(`savedData-${article.title}`, article);
+
     this.element.appendChild(modal.modalElement);
     modal.openModal();
   }
