@@ -29,13 +29,7 @@ class NewsItem {
 
   handleArticleClick() {
     const existingData = JSON.parse(localStorage.getItem('savedData'));
-    //const modal = new Modal();
     const modal = existingData ? new ExistingModal(existingData) : new Modal();
-    /*if (existingData) {
-      // 기존 데이터가 있을 경우, 모달에 데이터를 채워 넣습니다.
-      modal.titleInput.value = existingData.title || "";
-      modal.contentInput.value = existingData.content || "";
-    }*/
     this.element.appendChild(modal.modalElement);
     modal.openModal();
   }

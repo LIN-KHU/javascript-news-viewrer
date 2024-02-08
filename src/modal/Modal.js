@@ -5,20 +5,36 @@ class Modal {
 
         this.modalTitle = document.createElement("div");
         this.modalTitle.textContent = "의견 남기기";
+        this.modalTitle.classList.add("modalTitle");
         this.modalElement.appendChild(this.modalTitle);
 
+        this.titleInputLabel = document.createElement("div");
+        this.titleInputLabel.textContent = "제목"; 
+        this.titleInputLabel.classList.add("modalInputLabel");
+        this.modalElement.appendChild(this.titleInputLabel);
+
         this.titleInput = document.createElement("input");
-        this.titleInput.placeholder = "제목";
+        this.titleInput.classList.add("modalTitleInput");
         this.modalElement.appendChild(this.titleInput);
 
+        this.contentInputLabel = document.createElement("div");
+        this.contentInputLabel.textContent = "내용"; 
+        this.contentInputLabel.classList.add("modalInputLabel");
+        this.modalElement.appendChild(this.contentInputLabel);
+
         this.contentInput = document.createElement("textarea");
-        this.contentInput.placeholder = "내용";
         this.modalElement.appendChild(this.contentInput);
 
         this.saveButton = document.createElement("button");
         this.saveButton.textContent = "저장";
         this.saveButton.addEventListener("click", this.handleSave.bind(this));
         this.modalElement.appendChild(this.saveButton);
+
+        this.closeButton = document.createElement("div");
+        this.closeButton.textContent = 'x';
+        this.closeButton.classList.add("modalCloseButton");
+        this.closeButton.addEventListener("click", this.closeModal.bind(this));
+        this.modalElement.appendChild(this.closeButton);
     }
 
     handleSave() {
@@ -29,7 +45,6 @@ class Modal {
             localStorage.setItem('savedData', JSON.stringify({ title, content }));
             this.closeModal();
         } else {
-            //alert("제목과 내용을 입력해주세요.");
             this.closeModal();
         }
     }
@@ -38,15 +53,15 @@ class Modal {
         const sectionElement = document.querySelector("section");
         sectionElement.appendChild(this.modalElement);
         this.modalElement.style.display = "block";
-      }
-    
-      closeModal() {
+    }
+
+    closeModal() {
         const sectionElement = document.querySelector("section");
         sectionElement.removeChild(this.modalElement);
         this.modalElement.style.display = "none";
         this.titleInput.value = "";
         this.contentInput.value = "";
-      }
+    }
 }
 
 export default Modal;
