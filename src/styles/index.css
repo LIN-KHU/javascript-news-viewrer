@@ -44,12 +44,11 @@ header {
 
 nav {
   background-color: #FFF;
-  /* 추가된 스타일: 가로 정렬을 위한 Flexbox 사용 */
   width: 480px;
   height: 40px;
   flex-shrink: 0;
   display: flex;
-  align-items: center; /* 세로 중앙 정렬 */
+  align-items: center;
   justify-content: space-between;
   padding-left: 10px;
 
@@ -66,21 +65,19 @@ nav ul {
 }
 
 nav li {
-  /*margin-right: 10px; 이러면 마지막 항목도 띄어지니까.*/
   cursor: pointer;
   font-family: Inter;
   font-size: 20px;
   font-weight: 400;
   line-height: normal;
   letter-spacing: 2px;
-  /*width: 39.731px;*/
   height: 24px;
 
   position: relative;
 }
 
 nav li:not(:last-child) {
-  margin-right: 13px; /* 마지막 요소 이외의 모든 요소에 오른쪽 여백 추가 */
+  margin-right: 13px; 
 }
 
 nav li::after {
@@ -90,13 +87,13 @@ nav li::after {
   left: 0;
   width: 0;
   height: 2px;
-  background-color: transparent; /* 초기에 투명한 색상 */
-  transition: width 0.3s ease; /* 너비 변경에 대한 전환 효과 설정 */
+  background-color: transparent; 
+  transition: width 0.3s ease; 
 }
 
 nav li.active::after {
-  width: 100%; /* 클릭된 항목에 대한 밑줄 너비 100%로 변경 */
-  background-color: #466AEA; /* 클릭된 항목에 대한 밑줄 색상 변경 */
+  width: 100%; 
+  background-color: #466AEA; 
 }
 
 nav li.active {
@@ -105,7 +102,7 @@ nav li.active {
 }
 
 nav li:hover::before {
-  background-color: #466AEA; /* 호버 시에 회색 밑줄을 파란색으로 변경 */
+  background-color: #466AEA; 
 }
 
 img {
@@ -134,16 +131,16 @@ section > div > h2 {
 }
 
 section > div > p {
-  text-align: left; /* 기사 내용을 왼쪽 정렬로 유지 */
+  text-align: left; 
 }
 
 section > div > p strong {
-  display: inline-block; /* strong 태그를 블록 요소로 변경하여 왼쪽 정렬 적용 */
-  text-align: left; /* strong 태그 내용을 왼쪽 정렬로 유지 */
+  display: inline-block; 
+  text-align: left; 
 }
 
 section > div > p > strong::after {
-  content: ' | '; /* 각 strong 태그 뒤에 구분을 위한 구분자 추가 */
+  content: ' | '; 
 }
 
 p {
@@ -153,4 +150,98 @@ p {
 
 .active::after{
   text-decoration: underline;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 550px;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 30px; 
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.modalTitle {
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.modalInputLabel {
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.modalTitleInput {
+  background-color: #ddd; 
+  border: none; 
+  border-radius: 10px;
+}
+
+.modal textarea {
+  background-color: #ddd; 
+  border: none; 
+  border-radius: 10px;
+  width: 300px;
+  height: 300px;
+}
+
+.modal input,
+.modal textarea,
+.modal button {
+  margin-bottom: 15px; 
+  width: 100%;
+  padding: 10px; 
+  box-sizing: border-box; 
+}
+
+.modal input[type="text"] {
+  height: 40px; 
+}
+
+.modal button {
+  font-size: 14px; 
+  width: 48%; 
+  display: inline-block; 
+  vertical-align: top;
+  margin-right: 4%; 
+  background-color: #466AEA;
+  border: none;
+  color: white;
+  border-radius: 10px;
+}
+
+.modal button + button {
+  margin-left: 4%; 
+}
+
+.modal .buttons-container {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.modal button:last-child {
+  margin-right: 0; 
+}
+
+.modal .delete-button {
+  background-color: #e26767;
+}
+
+.modalCloseButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333; 
 }
