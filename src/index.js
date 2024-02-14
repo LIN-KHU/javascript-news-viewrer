@@ -2,6 +2,7 @@ import "./styles";
 import TAB_NAME from "./assets/TAB_NAME";
 import { fetchNews } from "./api/api";
 import Tab from "./assets/tab";
+import { openModal } from "./assets/modal";
 require("dotenv").config();
 
 class App {
@@ -47,7 +48,7 @@ class App {
       `;
 
       const opinionButton = articleElement.querySelector(".button-arrow");
-      opinionButton.addEventListener("click", () => this.openModal(article.title));
+      opinionButton.addEventListener("click", () => openModal(article.url));
 
       newsSection.appendChild(articleElement);
     });
@@ -61,98 +62,6 @@ class App {
     const selectedTab = document.querySelector(`#nav a[data-tab="${tabName}"]`);
     if (selectedTab) {
       selectedTab.classList.add('selected');
-    }
-  }
-
-  openModal(articleTitle) {
-    const modal = document.getElementById("modal");
-    const closeModal = document.querySelector(".close-modal");
-    const opinionForm = document.getElementById("opinion-form");
-    const opinionTitle = document.getElementById("opinion-title");
-    const opinionContent = document.getElementById("opinion-content");
-
-    modal.style.display = "block";
-
-    closeModal.addEventListener("click", () => {
-      modal.style.display = "none";
-    });
-
-    window.addEventListener("click", (event) => {
-      if (event.target === modal) {
-        modal.style.display = "none";
-      }
-    });
-    
-    const storedOpinion = localStorage.getItem(articleTitle);
-    
-    if (storedOpinion) {
-      const parseOpinion = JSON.parse(storedOpinion);
-
-      const SavedOpinion = document.getElementById("modal-header");
-      SavedOpinion.innerHTML = `
-      <h3>${parseOpinion.title}</h3>
-      <p>${parseOpinion.content}</p>
-      `;
-      
-      opinionTitle.value = parseOpinion.title;
-      opinionContent.value = parseOpinion.content;
-
-      const saveButton = document.getElementById("save-opinion");
-      let editButton = document.getElementById("edit-opinion");
-      let deleteButton = document.getElementById("delete-opinion");
-
-      if(saveButton) {
-        saveButton.remove();
-      }
-
-      if (!editButton) {
-        editButton = document.createElement("button");
-        editButton.textContent = "edit";
-        editButton.id = "edit-opinion";
-  
-        editButton.addEventListener("click", () => {
-          const opinion = { title: opinionTitle.value, content: opinionContent.value };
-          localStorage.setItem(articleTitle, JSON.stringify(opinion));
-          modal.style.display = "none";
-        });
-  
-        opinionForm.appendChild(editButton);
-      }
-  
-      if (!deleteButton) {
-        deleteButton = document.createElement("button");
-        deleteButton.textContent = "delete";
-        deleteButton.id = "delete-opinion";
-  
-        deleteButton.addEventListener("click", () => {
-          localStorage.removeItem(articleTitle);
-          modal.style.display = "none";
-        });
-  
-        opinionForm.appendChild(deleteButton);
-      }
-    } else {
-      opinionTitle.value = "";
-      opinionContent.value = "";
-
-      const saveButton = document.getElementById("save-opinion");
-      const editButton = document.getElementById("edit-opinion");
-      const deleteButton = document.getElementById("delete-opinion");
-
-      saveButton.textContent = "save";
-      saveButton.addEventListener("click", () => {
-        const opinion = { title: opinionTitle.value, content: opinionContent.value };
-        localStorage.setItem(articleTitle, JSON.stringify(opinion));
-        modal.style.display = "none";
-      });
-
-      if (editButton) {
-        editButton.remove();
-      }
-
-      if (deleteButton) {
-        deleteButton.remove();
-      }
     }
   }
 }
