@@ -49,7 +49,9 @@ export function openModal(article) {
           editButton.id = "edit-opinion";
     
           editButton.addEventListener("click", () => {
-            const editedTitle = opinionTitle.value; // trim()을 사용하여 앞뒤 공백을 제거한 값을 가져옵니다.
+            event.preventDefault();
+            
+            const editedTitle = opinionTitle.value; 
             const editedContent = opinionContent.value;
 
             if (editedTitle !== "" && editedContent !== "") {
