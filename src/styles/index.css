@@ -123,6 +123,10 @@ section {
   background-color: rgba(0,0,0,0.4);
 }
 
+.modal.open {
+  display: block;
+}
+
 .modal-content h2 {
   margin-bottom: 20px;
 }
@@ -153,11 +157,11 @@ section {
   background-color: #005fcc;
   color:#ffffff;
   border: none;
-  border-radius: 15px;
+  border-radius: 12px;
   padding: 10px;
   min-height:10px; 
   min-width: 60px;
-  width: 40%;
+  width: 100%;
 }
 
 #save-opinion:hover {
@@ -168,15 +172,30 @@ section {
   background-color: #005fcc;
   color:#ffffff;
   border: none;
-  border-radius: 15px;
+  border-radius: 12px;
   padding: 10px;
   min-height:10px; 
   min-width: 60px;
-  width: 40%;
+  width: 50%;
 }
 
 #edit-opinion:hover {
   background-color:#002ead;
+}
+
+#delete-opinion {
+  background-color: #b30000;
+  color:#ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  min-height:10px; 
+  min-width: 60px;
+  width: 50%;
+}
+
+#delete-opinion:hover {
+  background-color:#8a0000;
 }
 
 #opinion-title {
